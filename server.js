@@ -1,5 +1,5 @@
 var express = require("express");
-var bodyParser = require("bodyParser");
+var bodyParser = require("body-parser");
 var path = require("path");
 
 var app = express();
@@ -10,7 +10,7 @@ app.listen(PORT, function() {
 });
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlendcoded({extended: true}));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.text());
 app.use(bodyParser.json({type:"application/vnd.api+json"}));
 
