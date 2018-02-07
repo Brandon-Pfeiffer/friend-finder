@@ -1,42 +1,47 @@
 var friendOptions = require("../data/friend.js");
 
 module.exports = function(app) {
-		app.get("/api/friends", function(req, res) {
+		app.get("/api/friend", function(req, res) {
 			res.json(friendOptions);
 		});
 
-		app.post("/api/friends", function(req ,res) {
+		app.post("/api/friend", function(req ,res) {
 			var newFriend = req.body;
 
-			function sum(array) {
-					var result = 0;
-					for (var i = 0; i < array.length; i++) {
-							result += parseInt(array[i]);
-					};
-					return result;
+			var friendlistDoggo = {
+				name: "",
+				photo: "",
+				dogDifference: 1000
+
 			};
 
-			var NFtotal = sum(newFriend.scores);
-			var friendDiff = [];
+			var friendScores = newFriend.scores;
+			var totalDifference = 0;
 
-			for (var i = 0; i < friendOptions.length; i++) {
-					var totalDifference = Math.abs(NFtotal - sum(friendOptions[i].scores));
-					friendDiff.push(totalDifference);
-			}
+			for (var i = 0; i < dogs.length; i++) {
+				totalDifference = 0;
 
-			function indexofSmallest(array) {
-				var lowestNum = 0;
-				for (var i = 1; i < array.length; i++) {
-						if (array[i] < array[lowestNum]) lowestNum = i;
+				for (var w = 0; w < dogs[i].scores[w]; w++) {
+					var totalDifference = Math.abs(parseInt(friendScores[w]) - parseInt(dogs[i].scores[w]));
+
+					if (totalDifference <= friendlistDogg.dogDifference) {
+						friendlistDoggo.photo = dogs[i].photo;
+						friendlistDoggo.name = dogs[i].name;
+						friendlistDoggo.dogDifference = totalDifference;
+
+					}
 				}
-				return lowestNum;
 			}
 
-			var match = indexofSmallest(friendDiff);
+			console.log(friendlistDoggo);
+			console.log(totalDifference);
+			console.log(friendScores);
 
-			console.log(match);
-			console.log(NFtotal);
-			console.log(friendDiff);
-			friendOptions.push(newFriend);
+
+
+			dogs.push(newFriend);
+
+			res.json(friendlistDoggo);
+
 		});
 }

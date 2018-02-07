@@ -12,6 +12,8 @@
   		crossorigin="anonymous"></script>
 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
 
 </head>
 <body>
@@ -156,7 +158,7 @@
 		<footer class="footer">
 	<div class="container">
 					<p>
-								<a href="file:///Users/brandonpfeiffer/Documents/friend-finder/app/data/friend.js">API Friends List</a>
+								<a href="api/friend.js">API Friends List</a>
 
 								<a href="https://github.com/Brandon-Pfeiffer/friend-finder">GitHub Repo</a>
 					</p>
@@ -164,6 +166,24 @@
 		</footer>
 
 	</div>
+
+	<div id="matchingModal" class="modal fade" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			  <h4 class="modal-title">New Friend!</h4>
+			</div>
+			<div class="modal-body">
+			  <h2 id="matchingName"></h2>
+			  <img id="matchingPic" src="http://i.telegraph.co.uk/multimedia/archive/03439/dude6_3439641b.jpg" alt="">
+			</div>
+			<div class="modal-footer">
+			  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		  </div>
+		</div>
+	  </div>
 
 	<script type="text/javascript">
 
@@ -181,7 +201,7 @@
 
 			if (validateForm()) {
 
-			var userData = {
+			var newFriend = {
 				name: $("#name").val(),
 				photo: $("#photo").val(),
 				scores: [parseInt($("#q1").val()),
@@ -194,22 +214,22 @@
 						 parseInt($("#q8").val()),
 						 parseInt($("#q9").val()),
 						 parseInt($("#q10").val()) ]
-			}
+			};
 
-				console.log(userData);
+				console.log(newFriend);
 
 				var currentURL = window.location.origin;
 
-				$.post(currentURL + "/api/friends", userData, function(data) {
+				$.post(currentURL + "/api/friends", newFriend, function(data) {
 
+					$("#matchingModal").modal("toggle");
+					$("#matchingName").text(data.name);
+					$("#matchingPic").attr("src", data.photo);
 
-						$("#matchName").text(data.name);
-						$("#matchImg").attr("src", data.photo);
-
-						$("#resultsModal").modal("toggle");
+						
 			});
 			} else {
-					alert("Please fill out all fields before submitting!");
+					alert("Fill out the entire form before submitting!");
 			}
 
 		return false;
